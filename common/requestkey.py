@@ -39,6 +39,14 @@ class Key:
         value = self.__get_relations(value)
         self.session.headers[key] = value
 
+    def delheaders(self, key):
+        """
+        删除请求头
+        :param key: 头的键值
+        :return: 无
+        """
+        del self.session.headers[key]
+
     def seturi(self, uri):
         '''
         设置基础uri
@@ -131,6 +139,8 @@ if __name__ == '__main__':
     k.post('auth', '')
     # 添加token到头里面
     k.addheaders('token', k.jsonres['token'])
+    # 删除头
+    # k.delheaders('token')
     # 注册用户
     k.post('/register', 'username=sanshia&pwd=123456&nickname=sanshia&describe=sanshia')
     # 登录
