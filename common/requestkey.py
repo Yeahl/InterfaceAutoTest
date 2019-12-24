@@ -43,8 +43,7 @@ class Key:
         '''
         设置基础uri
         :param uri: uri地址
-        :param path: 接口路径
-        :return: 无
+        :return: 基础uri
         '''
         self.uri = uri
         return self.uri
