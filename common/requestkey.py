@@ -12,9 +12,9 @@ class Key:
         # 结果解析
         self.result = None
         self.jsonres = None
-        #基础URI
+        # 保存基础uri
         self.uri = None
-        #保存关联数据的字典
+        # 保存关联数据的字典
         self.relations = {}
 
     def post(self, path, params=None):
@@ -39,14 +39,22 @@ class Key:
         value = self.__get_relations(value)
         self.session.headers[key] = value
 
-    def __seturl(self, path):
+    def seturi(self, uri):
         '''
-        组装接口地址
+        设置基础uri
         :param uri: uri地址
         :param path: 接口路径
         :return: 无
         '''
+        self.uri = uri
+        return self.uri
 
+    def __seturl(self, path):
+        """
+        组装接口地址
+        :param path: 接口路径
+        :return: 接口地址
+        """
         return self.uri + path
 
     def __getparams(self, params):
@@ -102,7 +110,7 @@ if __name__ == '__main__':
     # 创建一个http请求库的实例对象
     k = Key()
     # 定义基础请求地址
-    k.uri = 'http://112.74.191.10:80/inter/HTTP/'
+    k.seturi('http://112.74.191.10:80/inter/HTTP/')
     # 获取token
     k.post('auth', '')
     #保存 token
@@ -119,16 +127,16 @@ if __name__ == '__main__':
     k.post('getUserInfo', 'id={userid}')
     # 退出登录
     k.post('logout')
-    # print("========================注册用户========================")
-    # # 获取token
-    # k.post('auth', '')
-    # # 添加token到头里面
-    # k.addheaders('token', k.jsonres['token'])
-    # # 注册用户
-    # k.post('/register', 'username=sanshia&pwd=123456&nickname=sanshia&describe=sanshia')
-    # # 登录
-    # k.post('login', {'username': 'sanshia', 'password': '123456'})
-    # # 获取用户信息
-    # k.post('getUserInfo', 'id={}'.format(k.jsonres['userid']))
-    # # 退出登录
-    # k.post('logout')
+    print("========================注册用户========================")
+    # 获取token
+    k.post('auth', '')
+    # 添加token到头里面
+    k.addheaders('token', k.jsonres['token'])
+    # 注册用户
+    k.post('/register', 'username=sanshia&pwd=123456&nickname=sanshia&describe=sanshia')
+    # 登录
+    k.post('login', 'username=sanshia&password=123456')
+    # 获取用户信息
+    k.post('getUserInfo', 'id={}'.format(k.jsonres['userid']))
+    # 退出登录
+    k.post('logout')
